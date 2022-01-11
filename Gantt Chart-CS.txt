@@ -1,0 +1,34 @@
+google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        ['skill1', 'Initiate', new Date(2022, 0, 10), new Date(2022, 0, 17), null,  0,  null],
+        ['skill2', 'Plan', new Date(2022, 0, 17),new Date(2022, 0, 24),null, 0, 'skill1'],
+        ['skill3', 'Execute', new Date(2022, 0, 24), new Date(2022, 0, 31),null, 0, 'skill2'],
+        ['skill4', 'Evaluate', new Date(2022, 1, 1), new Date(2022, 1, 7),null, 0, 'skill3'],
+        ['test', 'Close', new Date(2022, 1, 8), new Date(2022, 1, 15),null, 0, 'skill1, skill2, skill3, skill4']
+      ]);
+
+      var options = {
+        height: 275
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
